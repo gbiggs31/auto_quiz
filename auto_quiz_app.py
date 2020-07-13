@@ -138,14 +138,17 @@ month = st.sidebar.slider(
 
 # if not show_answer:
 # 	change_flag = increment_change_var(1)
-
-try:
-	question, second_sentence, answer = get_quiz_question(year, month, difficulty)
-except:
-	st.write('sorry, error, trying again')
-	question, second_sentence, answer = get_quiz_question(year, month, difficulty)
-else:
-	pass
+i = 0
+while i < 5:
+	try:
+		question, second_sentence, answer = get_quiz_question(year, month, difficulty)
+		i = 5
+	except:
+		st.write('sorry, error, trying again')
+		question, second_sentence, answer = get_quiz_question(year, month, difficulty)
+		i += 1
+	else:
+		pass
 
 
 st.write('And your question is....')
