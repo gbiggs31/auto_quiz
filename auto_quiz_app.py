@@ -58,7 +58,7 @@ def turn_difficulty_to_range(difficulty):
     upper_bound = difficulty * 100 - 100
     return lower_bound, upper_bound
 
-
+@st.cache(suppress_st_warning=True)
 def get_quiz_question(year,month,difficulty):
     # range of choice is difficulty
     # can also adjust date range
@@ -66,7 +66,7 @@ def get_quiz_question(year,month,difficulty):
 #     print(month)
     month = '00' + str(month)
     month = month[-2:]
-    print(month)
+    # print(month)
     
     lower_bound, upper_bound = turn_difficulty_to_range(int(difficulty))
     article_number = random.randrange(upper_bound,lower_bound)
@@ -98,34 +98,79 @@ st.title('Auto Question App')
 
 # Add a slider to the sidebar:
 difficulty = st.sidebar.slider(
-    'Select a range of values',
-    0, 10, (1)
+    'Select a difficulty from 1-10',
+    1, 10, (1)
 )
 
+year = st.sidebar.slider(
+    'Select a year to base the question on',
+    2016, 2020, (2020)
+)
+
+month = st.sidebar.slider(
+    'Select a month for the question',
+    1, 12, (6)
+)
+
+
+# show_answer = st.sidebar.button('Want the answer?')
+
+# get_new_question = st.sidebar.button('Get a new question?')
+
+#create cache object for the "chat"
+# @st.cache(allow_output_mutation=True)
+# def get_random_seed():
+#     return []
+
 # hardcode month and year for testing
-year = '2020'
-month = '06'
+# year = '2020'
+# month = '06'
 
 # try and get it not to rerun when the user inputs that they want the answer
-answer_time	= 'no'
+# answer_time	= 'no'
 
-if answer_time != 'yes':
-	try:
-		question, second_sentence, answer = get_quiz_question(year, month, difficulty)
-	except:
-		st.write('sorry, error, trying again')
-		question, second_sentence, answer = get_quiz_question(year, month, difficulty)
+# if not st.button('Want the answer?'):
+# could define some function that doesn't change unless the button is not clicked?
+# @st.cache(suppress_st_warning=True)
+# def increment_change_var(change_flag):
+# 	return change_flag + 1
+
+
+# if not show_answer:
+# 	change_flag = increment_change_var(1)
+
+try:
+	question, second_sentence, answer = get_quiz_question(year, month, difficulty)
+except:
+	st.write('sorry, error, trying again')
+	question, second_sentence, answer = get_quiz_question(year, month, difficulty)
 else:
 	pass
+
+
 st.write('And your question is....')
 st.write(question)
 
 st.write('Need a hint?')
 st.write(second_sentence)
 
-answer_time = st.text_input('Want the answer? (type yes)')
-if answer_time == 'yes':
-	st.write('Answer:')
-	st.write(answer)
-else:
-	st.write('Waiting')
+# if st.button('Want the answer?'):
+# testing = st.button('Want the answer?')
+
+for i in range(5,0,-1):
+	output_string = "Showing answer in {}....".format(i)
+	st.write(output_string)
+	time.sleep(i)
+
+# st.write(show_answer)
+st.write('Answer:')
+st.write(answer)
+
+st.balloons()
+
+# answer_time = st.text_input('Want the answer? (type yes)')
+# if answer_time == 'yes':
+# 	st.write('Answer:')
+# 	st.write(answer)
+# else:
+# 	st.write('Waiting')
