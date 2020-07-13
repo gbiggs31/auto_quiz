@@ -58,7 +58,7 @@ def turn_difficulty_to_range(difficulty):
     upper_bound = difficulty * 100 - 100
     return lower_bound, upper_bound
 
-@st.cache(suppress_st_warning=True)
+# @st.cache(suppress_st_warning=True)
 def get_quiz_question(year,month,difficulty):
     # range of choice is difficulty
     # can also adjust date range
