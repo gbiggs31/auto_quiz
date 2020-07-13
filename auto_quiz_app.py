@@ -136,8 +136,7 @@ month = st.sidebar.slider(
 # 	return change_flag + 1
 
 
-# if not show_answer:
-# 	change_flag = increment_change_var(1)
+# try five times before giving up
 i = 0
 while i < 5:
 	try:
